@@ -36,6 +36,28 @@ async function searchImages() {
   showMoreBtn.style.display = 'block'
 }
 
+async function getRandomImages() {
+  const url = `https://api.unsplash.com/photos/random?count=12&client_id=${accesKey}`
+
+  const response = await fetch(url)
+  const data = await response.json()
+
+  searchResult.innerHTML = ''
+
+  data.forEach((imageData) => {
+    const image = document.createElement('img')
+    image.src = imageData.urls.small
+    const imageLink = document.createElement('a')
+    imageLink.href = imageData.links.html
+    imageLink.target = '_blank'
+
+    imageLink.appendChild(image)
+    searchResult.appendChild(imageLink)
+  })
+}
+
+document.addEventListener('DOMContentLoaded', getRandomImages)
+
 searchForm.addEventListener('submit', (event) => {
   event.preventDefault()
   page = 1
