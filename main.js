@@ -23,6 +23,15 @@ async function searchImages() {
 
   const results = data.results
 
+  if (results.length === 0) {
+    const noResultsMessage = document.createElement('p')
+    noResultsMessage.textContent = 'No se encontraron resultados.'
+    noResultsMessage.id = 'no-results-message'
+    searchResult.appendChild(noResultsMessage)
+    showMoreBtn.style.display = 'none'
+    return
+  }
+
   results.map((result) => {
     const image = document.createElement('img')
     image.src = result.urls.small
@@ -67,4 +76,11 @@ searchForm.addEventListener('submit', (event) => {
 showMoreBtn.addEventListener('click', () => {
   page++
   searchImages()
+})
+
+document.addEventListener('DOMContentLoaded', () => {
+  const homeIcon = document.getElementById('home-icon')
+  homeIcon.addEventListener('click', () => {
+    location.reload()
+  })
 })
